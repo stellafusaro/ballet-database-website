@@ -1,0 +1,91 @@
+        document.getElementById('add-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            // Clear previous errors
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            
+            // Client-side validation
+            let hasErrors = false;
+            
+            // Required fields
+            const requiredFields = ['title', 'year', 'summary', 'composer', 'choreographer', 'length', 'genres'];
+            requiredFields.forEach(field => {
+                const value = document.getElementById(field).value.trim();
+                if (!value) {
+                    document.getElementById(field + '-error').textContent = 'This field is required';
+                    hasErrors = true;
+                }
+            });
+            
+            // Year validation
+            const yearValue = document.getElementById('year').value.trim();
+            if (yearValue && isNaN(parseInt(yearValue))) {
+                document.getElementById('year-error').textContent = 'Year must be a number';
+                hasErrors = true;
+            }
+            
+            // Image URL validation
+            const imageUrl = document.getElementById('image').value.trim();
+            if (imageUrl && !imageUrl.startsWith('http://') && !imageUrl.startsWith('https://')) {
+                document.getElementById('image-error').textContent = 'Image URL must start with http:// or https://';
+                hasErrors = true;
+            }
+            
+            // Length format validation
+            const lengthValue = document.getElementById('length').value.trim();
+            if (lengthValue && !/^\d+\s*(minutes|mins|min|hrs|hours|hour)$/i.test(lengthValue)) {
+                document.getElementById('length-error').textContent = 'Length should be in format "X minutes" or "X hours"';
+                hasErrors = true;
+            }
+            
+            // If client-side validation passes, submit the form
+            if (!hasErrors) {
+                const formData = new FormData(this);
+                
+                fetch('/add', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        return response.json().then(errorData => {
+                            throw new Error(JSON.stringify(errorData));
+                        });
+                    }
+                })
+                .then(data => {
+                    document.getElementById('success-message').style.display = 'block';
+                    document.getElementById('view-item-link').href = `/view/${data.id}`;
+                    document.getElementById('add-form').reset();
+                    document.getElementById('title').focus();
+                    
+                    // Scroll to top to see success message
+                    window.scrollTo(0, 0);
+                })
+                .catch(error => {
+                    // Handle server-side validation errors
+                    const errorData = JSON.parse(error.message);
+                    const errors = errorData.errors;
+                    for(const field in errors) {
+                        document.getElementById(field + '-error').textContent = errors[field];
+                        
+                        // Scroll to the first error
+                        if (document.getElementById(field)) {
+                            document.getElementById(field).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            document.getElementById(field).focus();
+                            break;
+                        }
+                    }
+                });
+            } else {
+                // Scroll to the first error
+                const firstError = document.querySelector('.error:not(:empty)');
+                if (firstError) {
+                    const fieldId = firstError.id.replace('-error', '');
+                    document.getElementById(fieldId).scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    document.getElementById(fieldId).focus();
+                }
+            }
+        });

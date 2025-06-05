@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="text-center">{{ item.title }}</h1>
+    <p class="text-center">
+        {{ item.year }} | {{ item.length }} |
+        {% for genre in item.genres %}
+            {{ genre }}{% if not loop.last %}, {% endif %}
+        {% endfor %}
+    </p>
+    <img src="{{ item.image }}" class="img-fluid mx-auto d-block" alt="{{ item.title }}" style="max-width: 600px;">
+
+    <h3>Summary</h3>
+    <p>{{ item.summary }}</p>
+
+    <div class="row">
+        <div class="col-md-6 compcor">
+            <h3>Composer</h3>
+            <p>
+                {% for composer in item.composer %}
+                    {{ composer }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+	    <p><span class="other-works">Other Works:</span>
+                {% if item["other works by composer"] %}
+                    {% for work in item["other works by composer"] %}{{ work }}{% if not loop.last %}, {% endif %}{% endfor %}
+                {% else %}
+                    No other works listed.
+                {% endif %}
+            </p>
+        </div>
+
+        <div class="col-md-6 compcor">
+            <h3>Choreographer</h3>
+            <p>
+                {% for choreographer in item.choreographer %}
+                    {{ choreographer }}{% if not loop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+
+            <p><span class="other-works">Other Works:</span>
+                {% if item["other works by choreographer"] %}
+                    {% for work in item["other works by choreographer"] %}{{ work }}{% if not loop.last %}, {% endif %}{% endfor %}
+                {% else %}
+                    No other works listed.
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <h3>Performing Companies</h3>
+    <ul>
+        {% for company in item["performing companies"] %}
+            <li>
+                <strong>{{ company.name }}</strong> - {{ company.location }} ({{ company.performance_dates }})
+            </li>
+        {% endfor %}
+    </ul>
+
+    <h3>Talking Points & Iconic Moments</h3>
+    <ul>
+        {% for point in item["talking points & iconic moments"] %}
+            <li>{{ point }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/" class="btn btn-primary mt-3">Back to Home</a>
+    <a href="{{ url_for('edit_data', id=item.id) }}" class="btn btn-sm btn-secondary mt-3 ml-2">Edit</a>
+
+</div>
+{% endblock %}

@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h1>Search Results</h1>
+
+    {% if results %}
+        <p>Found {{ result_count }} results for "{{ query }}":</p>
+        <ul>
+            {% for result in results %}
+                <li class="search-result-item">
+                    <h3>
+                        {% if "title" in result[1] %}
+                            {% set title = result[0].title %}
+                            {% set search_pattern = query | lower %}
+                            {% set title_lower = title | lower %}
+                            {% if search_pattern in title_lower %}
+                                {% set start_pos = title_lower.index(search_pattern) %}
+                                {% set end_pos = start_pos + query | length %}
+                                {% set highlighted_part = title[start_pos:end_pos] %}
+                                {{ title[:start_pos] }}<span class='search-match'>{{ highlighted_part }}</span>{{ title[end_pos:] | safe }}
+                            {% else %}
+                                {{ title }}
+                            {% endif %}
+                        {% else %}
+                            {{ result[0].title }}
+                        {% endif %}
+                    </h3>
+
+                    {% if "composer" in result[1] %}
+                        <p>Composer:
+                            {% for composer in result[0].composer %}
+                                {% set search_pattern = query | lower %}
+                                {% set composer_lower = composer | lower %}
+                                {% if search_pattern in composer_lower %}
+                                    {% set start_pos = composer_lower.index(search_pattern) %}
+                                    {% set end_pos = start_pos + query | length %}
+                                    {% set highlighted_part = composer[start_pos:end_pos] %}
+                                    {{ composer[:start_pos] }}<span class='search-match'>{{ highlighted_part }}</span>{{ composer[end_pos:] | safe }}
+                                {% else %}
+                                    {{ composer }}
+                                {% endif %}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% elif "composer" in result[0] %}
+                        <p>Composer: {{ ', '.join(result[0].composer) }}</p>
+                    {% endif %}
+
+                    {% if "choreographer" in result[1] %}
+                        <p>Choreographer:
+                            {% for choreographer in result[0].choreographer %}
+                                {% set search_pattern = query | lower %}
+                                {% set choreographer_lower = choreographer | lower %}
+                                {% if search_pattern in choreographer_lower %}
+                                    {% set start_pos = choreographer_lower.index(search_pattern) %}
+                                    {% set end_pos = start_pos + query | length %}
+                                    {% set highlighted_part = choreographer[start_pos:end_pos] %}
+                                    {{ choreographer[:start_pos] }}<span class='search-match'>{{ highlighted_part }}</span>{{ choreographer[end_pos:] | safe }}
+                                {% else %}
+                                    {{ choreographer }}
+                                {% endif %}
+                                {% if not loop.last %}, {% endif %}
+                            {% endfor %}
+                        </p>
+                    {% elif "choreographer" in result[0] %}
+                        <p>Choreographer: {{ ', '.join(result[0].choreographer) }}</p>
+                    {% endif %}
+
+                    <a href="{{ url_for('view_data', id=result[0].id) }}" style="margin-bottom: 15px;">View Details</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No results found for "{{ query }}"</p>
+    {% endif %}
+{% endblock %}

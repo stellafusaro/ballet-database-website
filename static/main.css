@@ -1,0 +1,110 @@
+.search-match {
+    color: black;
+}
+
+.ballet-item img {
+    width: 600px; /* Set the width to your desired size */
+    height: 350px; /* Set the height to your desired size */
+    object-fit: cover; /* Ensures images maintain their aspect ratio and fill the specified dimensions */
+}
+
+.card-img-top {
+    height: 250px; /* Set a fixed height */
+    object-fit: cover; /* Ensures images maintain aspect ratio while filling the box */
+    width: 100%; /* Ensures all images fill their card width */
+}
+
+.navbar-light .navbar-brand {
+    color: #505050 !important;
+}
+
+body {
+   background-color: white;
+   color: #808080; /* Dark gray text for readability */
+}
+
+.search-result-item {
+    margin-bottom: 5px; /* Adjust as needed */
+}
+
+.search-result-item p {
+    margin-bottom: 3px; /* Adjust as needed */
+}
+
+.search-result-item a {
+    margin-top: 3px; /* Adjust as needed */
+}
+
+.search-result-item li{
+    margin-bottom: 10px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #696969; /* Darker gray for headings */
+}
+
+p, a, span, li {
+    color: #A9A9A9; /* Lighter gray for regular text */
+}
+
+.other-works {
+    color: #505050 !important;
+}
+
+
+.card-title {
+    color: #808080; /* Coral pink for card titles */
+}
+
+.card:hover {
+    border: 2px solid #f08080; /* Coral pink border on card hover */
+    transition: border 0.3s ease; /* Smooth transition */
+}
+
+.lead {
+    color: #555; /* A slightly lighter dark gray for the lead text */
+}
+
+/* Optional: Add a coral pink accent to the header text */
+.position-absolute h1 {
+    text-shadow: 1px 1px 2px rgba(240, 128, 128, 0.5); /* Coral pink shadow */
+}
+
+/* Optional: Add a coral pink accent to the links */
+a {
+    color: #007bff; /* Standard blue link color */
+}
+
+a:hover {
+    color: #f08080; /* Coral pink link color on hover */
+}
+/* Light Blue Navigation Bar */
+.navbar {
+    background-color: #9edbfb !important; /* Light blue background for the navigation bar */
+}
+
+/* Coral Pink Search Button */
+.btn-outline-success {
+    background-color: #f08080 !important;
+    border-color: #f08080; /* Coral pink border */
+    color: white; /* Coral pink text */
+}
+
+.btn-outline-success:hover {
+    background-color: #f08080; /* Coral pink background on hover */
+    border-color: #f08080;
+    color: white; /* White text on hover */
+}
+
+/* Coral pink primary button */
+.btn-primary {
+    background-color: #f08080; /* Coral pink background */
+    border-color: #f08080; /* Coral pink border */
+    color: white; /* White text */
+}
+
+.btn-primary:hover {
+    background-color: #fa9a9a; /* Slightly lighter coral pink on hover */
+    border-color: #fa9a9a;
+    color: white;
+}

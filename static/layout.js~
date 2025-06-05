@@ -1,0 +1,17 @@
+$(document).ready(function() {
+  $("#searchForm").submit(function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    var query = $("#searchInput").val().trim(); // Get user input and remove leading/trailing whitespace
+
+    if (query) {
+      // If there is a valid search query, redirect to the search results page with the query as a parameter
+      window.location.href = "/search?query=" + encodeURIComponent(query);
+    } else {
+      // If the input is only whitespace, clear the input and keep focus on the search bar
+        window.location.href = window.location.pathname;
+        event.preventDefault();
+    }
+  });
+});
+

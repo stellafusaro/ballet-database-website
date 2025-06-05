@@ -1,0 +1,43 @@
+document.getElementById('edit-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const formData = new FormData(this);
+
+    fetch('/edit/{{ item.id }}', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            return response.json().then(errorData => {
+                throw new Error(JSON.stringify(errorData));
+            });
+        }
+    })
+    .then(data => {
+        window.location.href = `/view/${data.id}`;
+    })
+    .catch(error => {
+        const errorData = JSON.parse(error.message);
+        const errors = errorData.errors;
+        for (const field in errors) {
+            document.getElementById(field + '-error').textContent = errors[field];
+        }
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    const discardButton = document.getElementById('discard-button');
+
+    if (discardButton) { // Ensure the element exists
+        discardButton.addEventListener('click', function() {
+            const itemId = this.dataset.itemId;
+            if (confirm("Are you sure you want to discard changes?")) {
+                window.location.href = `/view/${itemId}`;
+            }
+        });
+    }
+});
+
+

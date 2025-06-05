@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="container mt-4">
+        <h1>Add New Item</h1>
+        <div id="success-message" style="display: none;" class="alert alert-success">
+            <p>New item successfully created. <a href="#" id="view-item-link">See it here</a>.</p>
+        </div>
+        <form id="add-form">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title *</label>
+                <input type="text" class="form-control" id="title" name="title">
+                <div class="error text-danger" id="title-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="year" class="form-label">Year *</label>
+                <input type="text" class="form-control" id="year" name="year">
+                <div class="error text-danger" id="year-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="summary" class="form-label">Summary *</label>
+                <textarea class="form-control" id="summary" name="summary" rows="4"></textarea>
+                <div class="error text-danger" id="summary-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="composer" class="form-label">Composer (comma-separated) *</label>
+                <input type="text" class="form-control" id="composer" name="composer">
+                <div class="error text-danger" id="composer-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="choreographer" class="form-label">Choreographer (comma-separated) *</label>
+                <input type="text" class="form-control" id="choreographer" name="choreographer">
+                <div class="error text-danger" id="choreographer-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image URL</label>
+                <input type="text" class="form-control" id="image" name="image" placeholder="https://...">
+                <div class="error text-danger" id="image-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="length" class="form-label">Length *</label>
+                <input type="text" class="form-control" id="length" name="length" placeholder="e.g. 35 minutes">
+                <div class="error text-danger" id="length-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="genres" class="form-label">Genres (comma-separated) *</label>
+                <input type="text" class="form-control" id="genres" name="genres">
+                <div class="error text-danger" id="genres-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="other_works_composer" class="form-label">Other Works by Composer (comma-separated)</label>
+                <input type="text" class="form-control" id="other_works_composer" name="other_works_composer">
+                <div class="error text-danger" id="other_works_composer-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="other_works_choreographer" class="form-label">Other Works by Choreographer (comma-separated)</label>
+                <input type="text" class="form-control" id="other_works_choreographer" name="other_works_choreographer">
+                <div class="error text-danger" id="other_works_choreographer-error"></div>
+            </div>
+            <div class="mb-3">
+                <label for="talking_points" class="form-label">Talking Points & Iconic Moments (comma-separated)</label>
+                <textarea class="form-control" id="talking_points" name="talking_points" rows="3"></textarea>
+                <div class="error text-danger" id="talking_points-error"></div>
+            </div>
+            <p class="text-muted mb-3">Fields marked with * are required</p>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+<script src="{{ url_for('static', filename='js/add.js') }}"></script>
+{% endblock %}
